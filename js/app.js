@@ -6,6 +6,32 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
+  // 0. BACKEND CONFIGURATION (Google Apps Script Web App URL)
+  //    After deploying appscript.gs, paste its Web App URL here.
+  //    Leave empty to fall back to local-only wishes.
+  // =========================================================================
+  const RSVP_API_URL = "";
+
+  function apiConfigured() {
+    return typeof RSVP_API_URL === 'string' && RSVP_API_URL.trim() !== '';
+  }
+
+  async function fetchFromApi(fallback) {
+    if (!apiConfigured()) return fallback();
+    try {
+      const res = await fetch(RSVP_API_URL);
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      if (data && data.ok && Array.isArray(data.wishes)) {
+        return data.wishes;
+      }
+      return fallback();
+    } catch (err) {
+      return fallback();
+    }
+  }
+
+  // =========================================================================
   // 1. Dynamic Floating Romantic Hearts & Sparkles Particles Generator
   // =========================================================================
   const particlesContainer = document.getElementById('particlesContainer');
@@ -324,6 +350,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishes = getWishes();
     wishesList.innerHTML = '';
 
+    if (!wishes || wishes.length === 0) {
+      wishesList.innerHTML = '<div class="wish-item"><div class="wish-msg" style="text-align:center;color:#6B494D;">Belum ada ucapan. Jadilah yang pertama!</div></div>';
+      return;
+    }
+
     wishes.forEach(item => {
       const isAttending = item.status === 'Hadir';
       const card = document.createElement('div');
@@ -343,6 +374,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   renderWishes();
+
+  // If backend configured, override with live server data
+  if (apiConfigured()) {
+    fetchFromApi(() => getWishes()).then(serverWishes => {
+      if (serverWishes && serverWishes.length > 0) {
+        localStorage.setItem('silmi_okra_wedding_wishes', JSON.stringify(serverWishes));
+        renderWishes();
+      }
+    });
+  }
+
 
   const rsvpForm = document.getElementById('rsvpForm');
   if (rsvpForm) {
@@ -367,18 +409,53 @@ document.addEventListener('DOMContentLoaded', () => {
         time: 'Baru saja'
       };
 
-      const wishes = getWishes();
-      wishes.unshift(newWish);
-      localStorage.setItem('silmi_okra_wedding_wishes', JSON.stringify(wishes));
+      // Disable submit button while sending
+      const submitBtn = document.getElementById('btnRsvpSubmit');
+      if (submitBtn) submitBtn.disabled = true;
 
-      renderWishes();
-      document.getElementById('rsvpMessage').value = '';
-      showToast('Terima kasih atas doa restu & konfirmasi RSVP Anda! ❤️');
-      
-      // Smooth scroll slightly down to show the new wish
-      const wishesTitle = document.querySelector('.wishes-title');
-      if (wishesTitle) {
-        wishesTitle.scrollIntoView({ behavior: 'smooth' });
+      const finalize = (wishToAdd, successMessage) => {
+        const wishes = getWishes();
+        wishes.unshift(wishToAdd);
+        localStorage.setItem('silmi_okra_wedding_wishes', JSON.stringify(wishes));
+
+        renderWishes();
+        document.getElementById('rsvpMessage').value = '';
+        showToast(successMessage);
+
+        if (submitBtn) submitBtn.disabled = false;
+
+        // Smooth scroll slightly down to show the new wish
+        const wishesTitle = document.querySelector('.wishes-title');
+        if (wishesTitle) {
+          wishesTitle.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      if (apiConfigured()) {
+        fetch(RSVP_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ name: name, status: selectedStatus, message: message })
+        })
+          .then(res => res.text().then(t => ({ res: res, text: t })))
+          .then(({ res, text }) => {
+            let ok = false;
+            try { ok = !!JSON.parse(text).ok; } catch (e) { ok = res.ok; }
+            finalize(newWish, ok
+              ? 'Terima kasih atas doa restu & konfirmasi RSVP Anda! ❤️'
+              : 'Ucapan tersimpan, namun server belum menyimpannya. ❤️');
+            fetchFromApi(() => getWishes()).then(serverWishes => {
+              if (serverWishes && serverWishes.length > 0) {
+                localStorage.setItem('silmi_okra_wedding_wishes', JSON.stringify(serverWishes));
+                renderWishes();
+              }
+            });
+          })
+          .catch(() => {
+            finalize(newWish, 'Ucapan tersimpan di perangkat Anda. ❤️');
+          });
+      } else {
+        finalize(newWish, 'Terima kasih atas doa restu & konfirmasi RSVP Anda! ❤️');
       }
     });
   }
