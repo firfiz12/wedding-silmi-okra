@@ -89,34 +89,72 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 4. Open Invitation Button Hotspot
+  // 4. Open Invitation Button Hotspot + Smart Auto-Hide Bottom Nav
   // =========================================================================
   const openInvBtn = document.getElementById('openInvitationBtn');
   const bottomNav = document.getElementById('bottomNav');
   const profileSection = document.getElementById('profile');
 
+  // === Smart Auto-Hide Navigation Logic ===
+  // Nav appears on activity, hides 3s after last interaction
+  let navHideTimer = null;
+  let navUnlocked = false; // stays false until cover is passed
+
+  function showNav() {
+    if (!bottomNav || !navUnlocked) return;
+    bottomNav.classList.add('visible');
+    clearTimeout(navHideTimer);
+    navHideTimer = setTimeout(hideNav, 3000);
+  }
+
+  function hideNav() {
+    if (!bottomNav) return;
+    bottomNav.classList.remove('visible');
+  }
+
+  // Unlock nav (first time only) when user scrolls past cover
+  function unlockNav() {
+    if (navUnlocked) return;
+    navUnlocked = true;
+    showNav();
+  }
+
+  // Listen for any user interaction to show nav
+  ['scroll', 'touchstart', 'touchmove', 'mousedown', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      if (window.pageYOffset > 150) unlockNav();
+      if (navUnlocked) showNav();
+    }, { passive: true });
+  });
+
+  // Also show when clicking any nav item itself
+  if (bottomNav) {
+    bottomNav.addEventListener('mouseenter', () => {
+      clearTimeout(navHideTimer); // prevent hiding while hovering
+    });
+    bottomNav.addEventListener('mouseleave', () => {
+      navHideTimer = setTimeout(hideNav, 2000);
+    });
+    bottomNav.addEventListener('touchstart', () => {
+      clearTimeout(navHideTimer);
+      navHideTimer = setTimeout(hideNav, 3000);
+    }, { passive: true });
+  }
+
   if (openInvBtn) {
     openInvBtn.addEventListener('click', () => {
       playMusic();
-
-      // Reveal bottom nav
-      if (bottomNav) {
-        bottomNav.classList.add('visible');
-      }
+      navUnlocked = true;
 
       // Smooth scroll to profile section
       if (profileSection) {
         profileSection.scrollIntoView({ behavior: 'smooth' });
       }
+
+      // Show nav briefly then let auto-hide take over
+      setTimeout(showNav, 600);
     });
   }
-
-  // Also reveal bottom nav when user scrolls past cover
-  window.addEventListener('scroll', () => {
-    if (window.pageYOffset > 150) {
-      if (bottomNav) bottomNav.classList.add('visible');
-    }
-  });
 
   // =========================================================================
   // 5. Live Real-Time Countdown Timer (Target: 11 October 2026, 09:00:00 WIB)
@@ -188,34 +226,38 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 8. Copy to Clipboard Hotspots (BCA & Mandiri)
+  // 8. Copy to Clipboard Hotspots (BCA & BSI)
   // =========================================================================
   document.querySelectorAll('.copy-hotspot').forEach(btn => {
     btn.addEventListener('click', () => {
       const bank = btn.getAttribute('data-bank') || 'Bank';
       const account = btn.getAttribute('data-account') || '';
-      const name = btn.getAttribute('data-name') || '';
-      
+      const acName = btn.getAttribute('data-name') || '';
+
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(account).then(() => {
-          showToast(`✓ No. Rekening ${bank} (${account} a.n. ${name}) berhasil disalin!`);
-        }).catch(() => fallbackCopy(account, bank));
+          showToast(`✓ No. Rekening ${bank} (${account}${acName ? ' a.n. ' + acName : ''}) disalin!`);
+        }).catch(() => fallbackCopy(account, bank, acName));
       } else {
-        fallbackCopy(account, bank);
+        fallbackCopy(account, bank, acName);
       }
     });
   });
 
-  function fallbackCopy(text, bank) {
+  function fallbackCopy(text, bank, acName) {
     const input = document.createElement('input');
     input.value = text;
+    input.setAttribute('readonly', '');
+    input.style.position = 'absolute';
+    input.style.left = '-9999px';
     document.body.appendChild(input);
     input.select();
+    input.setSelectionRange(0, 99999); // for iOS
     try {
       document.execCommand('copy');
-      showToast(`✓ No. Rekening ${bank} (${text} a.n. ${name}) berhasil disalin!`);
+      showToast(`✓ No. Rekening ${bank} (${text}${acName ? ' a.n. ' + acName : ''}) disalin!`);
     } catch(err) {
-      showToast(`No. Rekening: ${text}`);
+      showToast(`No. Rekening ${bank}: ${text}`);
     }
     document.body.removeChild(input);
   }
@@ -365,5 +407,5 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.add('active');
       }
     });
-  });
+  }, { passive: true });
 });
