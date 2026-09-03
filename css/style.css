@@ -34,6 +34,7 @@ body {
   font-family: 'Patrick Hand', cursive;
   color: var(--text-primary);
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -85,6 +86,7 @@ body {
   width: 100%;
   max-width: var(--max-w);
   min-height: 100vh;
+  min-height: 100svh;
   background: var(--cream-bg);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.22);
   position: relative;
