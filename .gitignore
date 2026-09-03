@@ -1,0 +1,7 @@
+node_modules/
+tools/
+screenshots/
+canva_screenshots/
+svg_renders/
+*.mp4
+*.pdf

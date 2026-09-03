@@ -1,0 +1,646 @@
+/* ===========================================================================
+   SILMI & OKRA WEDDING INVITATION
+   Vector-Accurate Canva SVG Engine with Seamless Interactivity
+   =========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Patrick+Hand+SC&family=Gaegu:wght@400;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
+
+:root {
+  --cream-bg: #FAF0E6;
+  --maroon: #8B1A1A;
+  --maroon-dark: #660E1A;
+  --maroon-glow: rgba(139, 26, 26, 0.25);
+  --text-primary: #3C1A1A;
+  --text-muted: #6B494D;
+  --max-w: 480px;
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: #E6D7C3;
+  background-image: radial-gradient(#C5B29B 1px, transparent 1px);
+  background-size: 20px 20px;
+  font-family: 'Patrick Hand', cursive;
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+}
+
+/* Main Mobile Viewport */
+.app-viewport {
+  width: 100%;
+  max-width: var(--max-w);
+  min-height: 100vh;
+  background: var(--cream-bg);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===========================================================================
+   FLOATING MUSIC & NAVIGATION
+   =========================================================================== */
+.floating-music-btn {
+  position: fixed;
+  top: 18px;
+  right: calc(50% - 224px);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--maroon);
+  border: 2.5px solid #FFF;
+  color: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px var(--maroon-glow);
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+@media (max-width: 480px) {
+  .floating-music-btn {
+    right: 14px;
+    top: 14px;
+  }
+}
+
+.floating-music-btn:hover {
+  transform: scale(1.1);
+  background: var(--maroon-dark);
+}
+
+.floating-music-btn.playing {
+  animation: spinMusic 8s linear infinite;
+}
+
+.floating-music-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+@keyframes spinMusic {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Floating Navigation Bar (Bottom) */
+.floating-bottom-nav {
+  position: fixed;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 420px;
+  background: rgba(255, 254, 250, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(139, 26, 26, 0.2);
+  border-radius: 9999px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 10px;
+  box-shadow: 0 8px 25px rgba(102, 14, 26, 0.16);
+  z-index: 900;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.floating-bottom-nav.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  padding: 4px 6px;
+  border-radius: 10px;
+}
+
+.nav-item svg {
+  width: 17px;
+  height: 17px;
+  stroke: currentColor;
+}
+
+.nav-item.active, .nav-item:hover {
+  color: var(--maroon);
+  background: rgba(139, 26, 26, 0.1);
+}
+
+/* ===========================================================================
+   PAGE SECTIONS (100% CANVA SVG BACKBONE)
+   =========================================================================== */
+.page-section {
+  width: 100%;
+  position: relative;
+  background: var(--cream-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-inner {
+  width: 100%;
+  position: relative;
+  line-height: 0;
+}
+
+.page-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ===========================================================================
+   HOTSPOTS & INTERACTIVE OVERLAYS
+   =========================================================================== */
+
+/* Pulse animation on interactive buttons */
+.hotspot-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(139, 26, 26, 0.5);
+  animation: pulseRipple 2.2s infinite;
+  pointer-events: none;
+}
+
+.hotspot-pulse-sm {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(139, 26, 26, 0.5);
+  animation: pulseRipple 2.5s infinite;
+  pointer-events: none;
+}
+
+@keyframes pulseRipple {
+  0% { box-shadow: 0 0 0 0 rgba(139, 26, 26, 0.6); }
+  70% { box-shadow: 0 0 0 12px rgba(139, 26, 26, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(139, 26, 26, 0); }
+}
+
+/* -------------------------------------------------------------
+   PAGE 1: COVER
+   ------------------------------------------------------------- */
+
+/* Dynamic Guest Name Overlay (seamlessly covers generic 'Name') */
+.guest-name-overlay {
+  position: absolute;
+  top: 84.1%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86%;
+  height: 5.0%;
+  background: radial-gradient(ellipse at center, #FAF0E6 70%, rgba(250, 240, 230, 0) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+}
+
+.guest-name-text {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.4rem, 4.8vw, 1.95rem);
+  font-weight: 700;
+  color: var(--maroon);
+  letter-spacing: 0.5px;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+}
+
+/* Open Invitation Button Hotspot */
+.open-invitation-hotspot {
+  position: absolute;
+  top: 89.2%;
+  left: 26.8%;
+  width: 46.4%;
+  height: 5.2%;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 25;
+  transition: transform 0.2s ease;
+}
+
+.open-invitation-hotspot:hover {
+  transform: scale(1.04);
+}
+
+/* -------------------------------------------------------------
+   PAGE 3: SAVE THE DATE & LIVE COUNTDOWN
+   ------------------------------------------------------------- */
+.countdown-overlay {
+  position: absolute;
+  top: 49.3%;
+  left: 18.8%;
+  width: 62.4%;
+  height: 7.2%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.2%;
+  z-index: 15;
+  pointer-events: none;
+}
+
+.cd-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border-radius: 4px;
+  height: 70%;
+  margin-top: 5%;
+}
+
+.cd-num {
+  font-family: 'Times New Roman', 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #1A1A1A;
+  line-height: 1;
+}
+
+@media (max-width: 380px) {
+  .cd-num { font-size: 1.55rem; }
+}
+
+/* Add to Google Calendar Action Button */
+.btn-cal-action {
+  position: absolute;
+  top: 76.5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: var(--maroon);
+  color: #FFF;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border: 2px solid #FFF;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px var(--maroon-glow);
+  transition: all 0.25s ease;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.btn-cal-action:hover {
+  background: var(--maroon-dark);
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: 0 6px 18px var(--maroon-glow);
+}
+
+/* -------------------------------------------------------------
+   PAGE 4: LOCATION
+   ------------------------------------------------------------- */
+.see-location-hotspot {
+  position: absolute;
+  top: 90.8%;
+  left: 24.2%;
+  width: 51.6%;
+  height: 6.6%;
+  border-radius: 9999px;
+  z-index: 25;
+  cursor: pointer;
+  background: transparent;
+  display: block;
+}
+
+.see-location-hotspot:hover {
+  transform: scale(1.03);
+}
+
+/* -------------------------------------------------------------
+   PAGE 5: WEDDING GIFT
+   ------------------------------------------------------------- */
+.copy-hotspot {
+  position: absolute;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 25;
+  transition: transform 0.2s ease;
+}
+
+.copy-hotspot:hover {
+  transform: scale(1.1);
+}
+
+/* BCA Copy Hotspot */
+.copy-bca {
+  top: 55.3%;
+  left: 24.2%;
+  width: 15.0%;
+  height: 2.8%;
+}
+
+/* Mandiri Copy Hotspot */
+.copy-mandiri {
+  top: 71.6%;
+  left: 65.8%;
+  width: 15.0%;
+  height: 2.8%;
+}
+
+/* WhatsApp Gift Hotspot */
+.wa-hotspot {
+  position: absolute;
+  top: 88.5%;
+  left: 29.2%;
+  width: 41.6%;
+  height: 6.0%;
+  border-radius: 9999px;
+  z-index: 25;
+  cursor: pointer;
+  background: transparent;
+  display: block;
+}
+
+.wa-hotspot:hover {
+  transform: scale(1.03);
+}
+
+/* -------------------------------------------------------------
+   PAGE 7: RSVP FORM OVERLAY
+   ------------------------------------------------------------- */
+.rsvp-form-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+}
+
+/* Your Name Input - blends right into SVG card input */
+.rsvp-input-name {
+  position: absolute;
+  top: 37.8%;
+  left: 24.6%;
+  width: 50.8%;
+  height: 5.6%;
+  border-radius: 6px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  padding: 4px 12px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.rsvp-input-name:focus {
+  border-color: rgba(139, 26, 26, 0.4);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Drop a Message Input - blends right into SVG textarea */
+.rsvp-input-msg {
+  position: absolute;
+  top: 48.0%;
+  left: 24.6%;
+  width: 50.8%;
+  height: 8.8%;
+  border-radius: 6px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  padding: 6px 12px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.rsvp-input-msg:focus {
+  border-color: rgba(139, 26, 26, 0.4);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Attendance Choice Hotspots */
+.rsvp-choice-hotspot {
+  position: absolute;
+  left: 24.2%;
+  width: 51.6%;
+  border-radius: 8px;
+  background: transparent;
+  border: 2px solid transparent;
+  cursor: pointer;
+  z-index: 25;
+  transition: all 0.2s ease;
+}
+
+.choice-hadir {
+  top: 61.2%;
+  height: 4.6%;
+}
+
+.choice-tidak {
+  top: 66.2%;
+  height: 4.6%;
+}
+
+.rsvp-choice-hotspot.active {
+  border-color: var(--maroon);
+  background: rgba(139, 26, 26, 0.12);
+}
+
+/* RSVP Submit Hotspot */
+.rsvp-submit-hotspot {
+  position: absolute;
+  top: 72.4%;
+  left: 24.2%;
+  width: 51.6%;
+  height: 4.6%;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 25;
+}
+
+.rsvp-submit-hotspot:hover {
+  transform: scale(1.02);
+}
+
+/* Live Wishes Board (Below Section 7) */
+.wishes-container {
+  width: 100%;
+  padding: 24px 22px 36px;
+  background: var(--cream-bg);
+  box-sizing: border-box;
+}
+
+.wishes-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--maroon);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.wishes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* Custom scrollbar for wishes */
+.wishes-list::-webkit-scrollbar {
+  width: 6px;
+}
+.wishes-list::-webkit-scrollbar-thumb {
+  background: rgba(139, 26, 26, 0.3);
+  border-radius: 4px;
+}
+
+.wish-item {
+  background: #FFFDF9;
+  border: 1.5px solid rgba(139, 26, 26, 0.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 10px rgba(102, 14, 26, 0.05);
+  animation: fadeInUp 0.4s ease;
+}
+
+.wish-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.wish-name {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+.wish-status {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.wish-status.hadir {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.wish-status.tidak {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.wish-msg {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--text-primary);
+}
+
+.wish-time {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  text-align: right;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* -------------------------------------------------------------
+   PAGE 8: CLOSING
+   ------------------------------------------------------------- */
+.hashtag-hotspot {
+  position: absolute;
+  top: 89.2%;
+  left: 18.0%;
+  width: 64.0%;
+  height: 4.4%;
+  z-index: 25;
+  cursor: pointer;
+  background: transparent;
+  display: block;
+}
+
+/* ===========================================================================
+   TOAST NOTIFICATION
+   =========================================================================== */
+.toast {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #2E7D32;
+  color: #FFF;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
