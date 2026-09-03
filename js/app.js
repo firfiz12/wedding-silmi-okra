@@ -1,12 +1,39 @@
 /**
  * SILMI & OKRA WEDDING INVITATION - JAVASCRIPT
- * Audio controller, dynamic guest personalization, live countdown,
- * calendar export, clipboard copy, RSVP manager, and scroll navigation
+ * Audio controller, dynamic particles generator, guest personalization,
+ * live countdown, Google Calendar export, clipboard copy, refined RSVP & wishes feed
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
-  // 1. Dynamic Guest Name Personalization from URL
+  // 1. Dynamic Floating Romantic Hearts & Sparkles Particles Generator
+  // =========================================================================
+  const particlesContainer = document.getElementById('particlesContainer');
+  if (particlesContainer) {
+    const particleIcons = ['❤️', '✨', '🌸', '💖', '🕊️', '💫'];
+    const totalParticles = 14;
+
+    for (let i = 0; i < totalParticles; i++) {
+      const p = document.createElement('div');
+      p.className = 'floating-particle';
+      p.textContent = particleIcons[Math.floor(Math.random() * particleIcons.length)];
+      
+      const leftPos = Math.random() * 100;
+      const duration = 9 + Math.random() * 8; // 9s to 17s
+      const delay = Math.random() * 10;
+      const size = 0.8 + Math.random() * 0.7; // 0.8rem to 1.5rem
+
+      p.style.left = `${leftPos}%`;
+      p.style.animationDuration = `${duration}s`;
+      p.style.animationDelay = `${delay}s`;
+      p.style.fontSize = `${size}rem`;
+
+      particlesContainer.appendChild(p);
+    }
+  }
+
+  // =========================================================================
+  // 2. Dynamic Guest Name Personalization from URL
   // Supports: ?to=Nama+Tamu or ?u=Nama or ?guest=Nama
   // =========================================================================
   const urlParams = new URLSearchParams(window.location.search);
@@ -26,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 2. Background Audio Controller
+  // 3. Background Audio Controller
   // =========================================================================
   const bgAudio = document.getElementById('bgAudio');
   const musicToggleBtn = document.getElementById('musicToggleBtn');
@@ -62,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 3. Open Invitation Button Hotspot
+  // 4. Open Invitation Button Hotspot
   // =========================================================================
   const openInvBtn = document.getElementById('openInvitationBtn');
   const bottomNav = document.getElementById('bottomNav');
@@ -92,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // 4. Live Real-Time Countdown Timer (Target: 11 October 2026, 09:00:00 WIB)
+  // 5. Live Real-Time Countdown Timer (Target: 11 October 2026, 09:00:00 WIB)
   // =========================================================================
   const weddingDate = new Date('2026-10-11T09:00:00+07:00').getTime();
 
@@ -130,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateCountdown, 1000);
 
   // =========================================================================
-  // 5. Add to Google Calendar Action
+  // 6. Add to Google Calendar Action
   // =========================================================================
   const btnAddToCalendar = document.getElementById('btnAddToCalendar');
   if (btnAddToCalendar) {
@@ -145,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 6. Toast Notification Helper
+  // 7. Toast Notification Helper
   // =========================================================================
   const toastEl = document.getElementById('toast');
   let toastTimeout;
@@ -161,16 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 7. Copy to Clipboard Hotspots (BCA & Mandiri)
+  // 8. Copy to Clipboard Hotspots (BCA & Mandiri)
   // =========================================================================
   document.querySelectorAll('.copy-hotspot').forEach(btn => {
     btn.addEventListener('click', () => {
       const bank = btn.getAttribute('data-bank') || 'Bank';
-      const account = btn.getAttribute('data-account') || '11223344';
+      const account = btn.getAttribute('data-account') || '';
+      const name = btn.getAttribute('data-name') || '';
       
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(account).then(() => {
-          showToast(`✓ No. Rekening ${bank} (${account}) berhasil disalin!`);
+          showToast(`✓ No. Rekening ${bank} (${account} a.n. ${name}) berhasil disalin!`);
         }).catch(() => fallbackCopy(account, bank));
       } else {
         fallbackCopy(account, bank);
@@ -185,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     input.select();
     try {
       document.execCommand('copy');
-      showToast(`✓ No. Rekening ${bank} (${text}) berhasil disalin!`);
+      showToast(`✓ No. Rekening ${bank} (${text} a.n. ${name}) berhasil disalin!`);
     } catch(err) {
       showToast(`No. Rekening: ${text}`);
     }
@@ -193,16 +221,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 8. RSVP Attendance Selection & Form Handling
+  // 9. Refined RSVP Attendance Selection & Form Handling
   // =========================================================================
   let selectedStatus = 'Hadir';
-  const choiceBtns = document.querySelectorAll('.rsvp-choice-hotspot');
+  const pillHadir = document.getElementById('pillHadir');
+  const pillTidak = document.getElementById('pillTidak');
+  const rsvpPills = document.querySelectorAll('.rsvp-pill');
 
-  choiceBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      choiceBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedStatus = btn.getAttribute('data-status') || 'Hadir';
+  rsvpPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      rsvpPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      selectedStatus = pill.getAttribute('data-status') || 'Hadir';
     });
   });
 
@@ -302,11 +332,17 @@ document.addEventListener('DOMContentLoaded', () => {
       renderWishes();
       document.getElementById('rsvpMessage').value = '';
       showToast('Terima kasih atas doa restu & konfirmasi RSVP Anda! ❤️');
+      
+      // Smooth scroll slightly down to show the new wish
+      const wishesTitle = document.querySelector('.wishes-title');
+      if (wishesTitle) {
+        wishesTitle.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   }
 
   // =========================================================================
-  // 9. Active Navigation Scroll Spy
+  // 10. Active Navigation Scroll Spy
   // =========================================================================
   const sections = document.querySelectorAll('section.page-section');
   const navItems = document.querySelectorAll('.nav-item');

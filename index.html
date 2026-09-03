@@ -25,6 +25,9 @@
 </head>
 <body>
 
+  <!-- Background Floating Romantic Petals & Hearts Container -->
+  <div class="floating-particles-container" id="particlesContainer" aria-hidden="true"></div>
+
   <!-- Main Viewport Container -->
   <main class="app-viewport" id="appViewport">
     
@@ -76,14 +79,27 @@
       <div class="page-inner">
         <img src="file_svg/1.svg" class="page-svg" alt="Cover: These Kids Are Getting Married">
         
+        <!-- Animated Sparkling Stars Overlay on Cover -->
+        <div class="anim-sparkle anim-sparkle-1">✨</div>
+        <div class="anim-sparkle anim-sparkle-2">✨</div>
+        <div class="anim-sparkle anim-sparkle-3">✨</div>
+        <div class="anim-sparkle anim-sparkle-4">✨</div>
+
+        <!-- Animated Fluttering Ribbon Bow Effect (top-left) -->
+        <div class="anim-ribbon-sway"></div>
+
+        <!-- Animated Wedding Rings Glow (top-right) -->
+        <div class="anim-rings-sparkle"></div>
+
         <!-- Dynamic Guest Name Overlay -->
         <div class="guest-name-overlay" id="guestNameOverlay">
           <div class="guest-name-text" id="guestName">Tamu Undangan</div>
         </div>
 
-        <!-- Open Invitation Hotspot Button -->
+        <!-- Open Invitation Hotspot Button with Pulsing Wave -->
         <button id="openInvitationBtn" class="open-invitation-hotspot" aria-label="Open Invitation">
           <span class="hotspot-pulse"></span>
+          <span class="hotspot-shimmer"></span>
         </button>
       </div>
     </section>
@@ -95,6 +111,17 @@
     <section id="profile" class="page-section">
       <div class="page-inner">
         <img src="file_svg/2.svg" class="page-svg" alt="Silmi Kaffah Almunawar & Muhammad Okra Dinata">
+
+        <!-- Animated Gliding Merpati Doves -->
+        <div class="anim-dove anim-dove-left"></div>
+        <div class="anim-dove anim-dove-right"></div>
+
+        <!-- Animated Red String Heartbeat Pulse -->
+        <div class="anim-heart-pulse"></div>
+
+        <!-- Sparkles -->
+        <div class="anim-sparkle anim-sparkle-p1">✨</div>
+        <div class="anim-sparkle anim-sparkle-p2">✨</div>
       </div>
     </section>
 
@@ -105,6 +132,27 @@
     <section id="savedate" class="page-section">
       <div class="page-inner">
         <img src="file_svg/3.svg" class="page-svg" alt="Save The Date 11.10.26">
+
+        <!-- Animated Swinging Disco Ball (Pendulum physics) -->
+        <div class="anim-discoball-swing" title="Swinging Disco Ball">
+          <svg viewBox="0 0 100 140" fill="none" stroke="#8B1A1A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="50" y1="0" x2="50" y2="28"/>
+            <circle cx="50" cy="28" r="4" fill="#8B1A1A"/>
+            <path d="M47 28 C34 17, 22 25, 30 35 C37 40, 46 30, 47 28"/>
+            <path d="M53 28 C66 17, 78 25, 70 35 C63 40, 54 30, 53 28"/>
+            <circle cx="50" cy="85" r="42"/>
+            <ellipse cx="50" cy="85" rx="42" ry="14"/>
+            <ellipse cx="50" cy="85" rx="42" ry="28"/>
+            <ellipse cx="50" cy="85" rx="14" ry="42"/>
+            <ellipse cx="50" cy="85" rx="28" ry="42"/>
+          </svg>
+          <div class="discoball-glint"></div>
+        </div>
+
+        <!-- Animated Clinking Cheers Couple on Cake -->
+        <div class="anim-cake-cheers">
+          <div class="cheers-glint">✨</div>
+        </div>
 
         <!-- Live Countdown Numbers Overlay -->
         <div class="countdown-overlay">
@@ -138,6 +186,13 @@
       <div class="page-inner">
         <img src="file_svg/4.svg" class="page-svg" alt="Location: Kampung Makan Joglo">
 
+        <!-- Animated Flying Birds across the Sky -->
+        <div class="anim-birds-flight">
+          <span class="flying-bird bird-1">🕊️</span>
+          <span class="flying-bird bird-2">🕊️</span>
+          <span class="flying-bird bird-3">🕊️</span>
+        </div>
+
         <!-- See Location Hotspot Link -->
         <a href="https://maps.google.com/?q=Kampung+Makan+Joglo+Jakarta+Barat" target="_blank" rel="noopener" class="see-location-hotspot" title="Buka di Google Maps" aria-label="See Location Google Maps">
           <span class="hotspot-pulse"></span>
@@ -151,15 +206,19 @@
          ================================================================= -->
     <section id="gift" class="page-section">
       <div class="page-inner">
-        <img src="file_svg/5.svg" class="page-svg" alt="Wedding Gift BCA & Mandiri">
+        <img src="svg_renders/page_5.png" class="page-svg" alt="Wedding Gift BCA & BSI">
+
+        <!-- Animated Swaying Bouquet & Jiggling Gift Boxes -->
+        <div class="anim-bouquet-sway"></div>
+        <div class="anim-giftbox-jiggle"></div>
 
         <!-- Copy BCA Button Hotspot -->
-        <button class="copy-hotspot copy-bca" data-bank="BCA" data-account="11223344" title="Salin No. Rekening BCA" aria-label="Salin No. Rekening BCA">
+        <button class="copy-hotspot copy-bca" data-bank="BCA" data-account="4190221046" data-name="Muhammad Okra Dinata" title="Salin No. Rekening BCA (4190221046 a.n. Muhammad Okra Dinata)" aria-label="Salin No. Rekening BCA">
           <span class="hotspot-pulse-sm"></span>
         </button>
 
         <!-- Copy Mandiri Button Hotspot -->
-        <button class="copy-hotspot copy-mandiri" data-bank="Mandiri" data-account="11223344" title="Salin No. Rekening Mandiri" aria-label="Salin No. Rekening Mandiri">
+        <button class="copy-hotspot copy-bsi" data-bank="BSI" data-account="7185383247" data-name="Silmi Kaffah" title="Salin No. Rekening BSI (7185383247 a.n. Silmi Kaffah)" aria-label="Salin No. Rekening BSI">
           <span class="hotspot-pulse-sm"></span>
         </button>
 
@@ -177,37 +236,70 @@
     <section id="story" class="page-section">
       <div class="page-inner">
         <img src="file_svg/6.svg" class="page-svg" alt="Love Story: Takdir, Sebuah Luka, Saling Dipersiapkan, Bismillah">
+
+        <!-- Animated Swaying Chandelier -->
+        <div class="anim-chandelier-sway"></div>
+
+        <!-- Animated Dangling Hearts -->
+        <div class="anim-hearts-dangle"></div>
       </div>
     </section>
 
 
     <!-- =================================================================
-         PAGE 7: RSVP & LIVE WISHES
+         PAGE 7: RSVP & LIVE WISHES (REFINED & PRECISE)
          ================================================================= -->
-    <section id="rsvp" class="page-section">
-      <div class="page-inner">
-        <img src="file_svg/7.svg" class="page-svg" alt="RSVP Silmi & Okra">
+    <section id="rsvp" class="page-section rsvp-refined-section">
+      
+      <!-- RSVP Title at Top (matches Canva typography) -->
+      <h2 class="rsvp-refined-title">RSVP</h2>
 
-        <!-- Interactive RSVP Form Overlay -->
-        <form id="rsvpForm" class="rsvp-form-overlay">
-          <!-- Name Input -->
-          <input type="text" id="rsvpName" class="rsvp-input-name" placeholder="Nama Anda" required autocomplete="name">
-          
-          <!-- Message Input -->
-          <textarea id="rsvpMessage" class="rsvp-input-msg" placeholder="Tuliskan ucapan dan doa restu..." required rows="3"></textarea>
-          
-          <!-- Attendance Choices -->
-          <button type="button" class="rsvp-choice-hotspot choice-hadir active" data-status="Hadir" aria-label="Absolutely, wouldn't miss it!"></button>
-          <button type="button" class="rsvp-choice-hotspot choice-tidak" data-status="Berhalangan" aria-label="Can't make it this time."></button>
-          
-          <!-- Submit Button Hotspot -->
-          <button type="submit" class="rsvp-submit-hotspot" aria-label="RSVP Now">
-            <span class="hotspot-pulse"></span>
+      <!-- Crisp, Native, Pixel-Perfect RSVP Card -->
+      <div class="rsvp-refined-card">
+        <h3 class="rsvp-card-heading">RSVP</h3>
+
+        <form id="rsvpForm">
+          <!-- Your Name -->
+          <div class="rsvp-field-group">
+            <label for="rsvpName" class="rsvp-field-label">Your name</label>
+            <input type="text" id="rsvpName" class="rsvp-text-input" placeholder="Tuliskan nama lengkap Anda" required autocomplete="name">
+          </div>
+
+          <!-- Drop a Message -->
+          <div class="rsvp-field-group">
+            <label for="rsvpMessage" class="rsvp-field-label">Drop a message</label>
+            <textarea id="rsvpMessage" class="rsvp-textarea-input" placeholder="Tuliskan doa restu & ucapan manis..." required rows="3"></textarea>
+          </div>
+
+          <!-- Are you coming? Choices -->
+          <div class="rsvp-field-group">
+            <label class="rsvp-field-label">Are you coming?</label>
+            <div class="rsvp-pills-wrap">
+              <div class="rsvp-pill active" data-status="Hadir" id="pillHadir">
+                <span class="pill-radio-dot"></span>
+                <span class="pill-text">Absolutely, wouldn't miss it!</span>
+              </div>
+              <div class="rsvp-pill" data-status="Berhalangan" id="pillTidak">
+                <span class="pill-radio-dot"></span>
+                <span class="pill-text">Can't make it this time.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-rsvp-submit" id="btnRsvpSubmit">
+            <span>RSVP now</span>
+            <span class="btn-submit-sparkle">✨</span>
           </button>
+
+          <!-- Disclaimer -->
+          <p class="rsvp-disclaimer-note">
+            Nama Anda akan ditampilkan pada papan doa dan ucapan di bawah ini.
+          </p>
         </form>
       </div>
 
-      <!-- Live Wishes Board (Placed immediately below the RSVP Card) -->
+      <!-- Live Wishes Board -->
       <div class="wishes-container">
         <h3 class="wishes-title">
           <span>💌 Doa &amp; Ucapan Hangat</span>
@@ -226,8 +318,13 @@
       <div class="page-inner">
         <img src="file_svg/8.svg" class="page-svg" alt="See You at Our Wedding Day 11.10.26 #berhaSILdiOKtober">
 
+        <!-- Animated Oval Ribbon Sway -->
+        <div class="anim-closing-sway"></div>
+
         <!-- Hashtag Hotspot Link -->
-        <a href="https://instagram.com/explore/tags/berhaSILdiOKtober/" target="_blank" rel="noopener" class="hashtag-hotspot" title="Lihat #berhaSILdiOKtober di Instagram" aria-label="Hashtag Instagram"></a>
+        <a href="https://instagram.com/explore/tags/berhaSILdiOKtober/" target="_blank" rel="noopener" class="hashtag-hotspot" title="Lihat #berhaSILdiOKtober di Instagram" aria-label="Hashtag Instagram">
+          <span class="hashtag-shimmer"></span>
+        </a>
       </div>
     </section>
 
