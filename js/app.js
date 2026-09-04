@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //    After deploying appscript.gs, paste its Web App URL here.
   //    Leave empty to fall back to local-only wishes.
   // =========================================================================
-  const RSVP_API_URL = "";
+  const RSVP_API_URL = "https://script.google.com/macros/s/AKfycbz9l4Fm1sjz8jmLpAr6PGbp6XonRhBYApuha3denNCsGZ3U9zuFrb710g9rxUT3DA0WKg/exec";
 
   function apiConfigured() {
     return typeof RSVP_API_URL === 'string' && RSVP_API_URL.trim() !== '';
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = document.createElement('div');
       p.className = 'floating-particle';
       p.textContent = particleIcons[Math.floor(Math.random() * particleIcons.length)];
-      
+
       const leftPos = Math.random() * 100;
       const duration = 9 + Math.random() * 8; // 9s to 17s
       const delay = Math.random() * 10;
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   const urlParams = new URLSearchParams(window.location.search);
   const guestParam = urlParams.get('to') || urlParams.get('u') || urlParams.get('guest') || urlParams.get('nama');
-  
+
   const guestNameEl = document.getElementById('guestName');
   const rsvpNameInput = document.getElementById('rsvpName');
 
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       document.execCommand('copy');
       showToast(`✓ No. Rekening ${bank} (${text}${acName ? ' a.n. ' + acName : ''}) disalin!`);
-    } catch(err) {
+    } catch (err) {
       showToast(`No. Rekening ${bank}: ${text}`);
     }
     document.body.removeChild(input);
