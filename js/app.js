@@ -482,5 +482,9 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.add('active');
       }
     });
+
+    sections.forEach(sec => {
+      sec.classList.toggle('page-active', sec.getAttribute('id') === currentId);
+    });
   }, { passive: true });
 });

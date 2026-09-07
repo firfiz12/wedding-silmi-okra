@@ -223,6 +223,19 @@ body {
   user-select: none;
 }
 
+/* Fade + Blur Page Transition */
+.page-section {
+  opacity: 0;
+  filter: blur(10px);
+  transition: opacity 1s ease, filter 1s ease;
+  will-change: opacity, filter;
+}
+
+.page-section.page-active {
+  opacity: 1;
+  filter: blur(0);
+}
+
 /* ===========================================================================
    DYNAMIC VIDEO-LIKE ANIMATIONS
    =========================================================================== */
