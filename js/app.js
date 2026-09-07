@@ -292,8 +292,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // 9. Refined RSVP Attendance Selection & Form Handling
   // =========================================================================
   let selectedStatus = 'Hadir';
-  const pillHadir = document.getElementById('pillHadir');
-  const pillTidak = document.getElementById('pillTidak');
   const rsvpPills = document.querySelectorAll('.rsvp-pill');
 
   rsvpPills.forEach(pill => {
