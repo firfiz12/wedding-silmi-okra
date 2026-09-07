@@ -39,6 +39,17 @@ body {
   position: relative;
 }
 
+/* Scroll Lock (until "Buka Undangan" is clicked) */
+html.scroll-locked,
+body.scroll-locked {
+  overflow: hidden;
+  height: 100%;
+}
+
+body.scroll-locked .app-viewport {
+  overscroll-behavior: none;
+}
+
 /* ===========================================================================
    FLOATING ROMANTIC PARTICLES (PETALS & HEARTS IN BACKGROUND)
    =========================================================================== */

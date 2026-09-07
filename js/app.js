@@ -121,6 +121,38 @@ document.addEventListener('DOMContentLoaded', () => {
   const bottomNav = document.getElementById('bottomNav');
   const profileSection = document.getElementById('profile');
 
+  // === Scroll Lock (until "Buka Undangan" is clicked) ===
+  const rootEl = document.documentElement;
+
+  function lockScroll() {
+    rootEl.classList.add('scroll-locked');
+    document.body.classList.add('scroll-locked');
+  }
+
+  function unlockScroll() {
+    rootEl.classList.remove('scroll-locked');
+    document.body.classList.remove('scroll-locked');
+  }
+
+  lockScroll();
+
+  // Guards: block touch / wheel / keyboard scrolling while locked
+  const LOCKED_KEYS = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ', 'PageUp', 'PageDown', 'Home', 'End'];
+
+  window.addEventListener('touchmove', (e) => {
+    if (rootEl.classList.contains('scroll-locked')) e.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener('wheel', (e) => {
+    if (rootEl.classList.contains('scroll-locked')) e.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener('keydown', (e) => {
+    if (rootEl.classList.contains('scroll-locked') && LOCKED_KEYS.includes(e.key)) {
+      e.preventDefault();
+    }
+  });
+
   // === Smart Auto-Hide Navigation Logic ===
   // Nav appears on activity, hides 3s after last interaction
   let navHideTimer = null;
@@ -171,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openInvBtn.addEventListener('click', () => {
       playMusic();
       navUnlocked = true;
+      unlockScroll();
 
       // Smooth scroll to profile section
       if (profileSection) {
