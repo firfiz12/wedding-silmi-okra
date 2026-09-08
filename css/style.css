@@ -365,41 +365,6 @@ body.scroll-locked .app-viewport {
   70% { transform: scale(1.18); }
 }
 
-/* Swinging Disco Ball (Save The Date) */
-.anim-discoball-swing {
-  position: absolute;
-  top: 74.8%;
-  left: 4.8%;
-  width: 22%;
-  pointer-events: none;
-  transform-origin: 50% 0%;
-  animation: swingDisco 3.8s ease-in-out infinite alternate;
-  z-index: 18;
-}
-
-@keyframes swingDisco {
-  0% { transform: rotate(-8deg); }
-  50% { transform: rotate(0deg); }
-  100% { transform: rotate(8deg); }
-}
-
-.discoball-glint {
-  position: absolute;
-  top: 45%;
-  left: 40%;
-  width: 8px;
-  height: 8px;
-  background: #FFF;
-  border-radius: 50%;
-  box-shadow: 0 0 12px 6px rgba(255, 255, 255, 0.9);
-  animation: glintFlicker 2.5s infinite;
-}
-
-@keyframes glintFlicker {
-  0%, 100% { opacity: 0; transform: scale(0.5); }
-  45%, 55% { opacity: 1; transform: scale(1.4); }
-}
-
 /* Clinking Cheers Cake Animation */
 .anim-cake-cheers {
   position: absolute;
